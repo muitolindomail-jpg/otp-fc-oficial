@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTP FC | Site Oficial</title>
+<style>
+:root {
+  --green:#a3ff3f;
+  --dark:#090e0c;
+  --panel:#151e19;
+  --muted:#a6b4aa;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--dark);color:white;
+  font-family:Arial,sans-serif;
+}
+header{
+  padding:20px 7%;display:flex;align-items:center;
+  justify-content:space-between;background:#101813;
+  border-bottom:1px solid #26352b;
+}
+.logo{font-size:25px;font-weight:900;color:var(--green)}
+nav{display:flex;gap:20px;flex-wrap:wrap}
+nav a{color:white;text-decoration:none;font-size:14px}
+nav a:hover{color:var(--green)}
+.hero{
+  padding:90px 8%;text-align:center;
+  background:linear-gradient(135deg,#14251a,#090e0c 70%);
+}
+.crest{
+  width:105px;height:105px;margin:auto auto 20px;
+  border:3px solid var(--green);border-radius:25px;
+  display:grid;place-items:center;font-size:30px;
+  font-weight:900;color:var(--green);
+}
+.hero h1{font-size:clamp(40px,8vw,75px);margin:10px}
+.hero h1 span{color:var(--green)}
+.hero p{color:var(--muted);font-size:17px}
+.tag{
+  display:inline-block;padding:9px 16px;border-radius:30px;
+  background:#263b2a;color:var(--green);font-size:12px;
+}
+section{padding:55px 8%}
+h2{font-size:29px;margin-top:0}
+h2 span{color:var(--green)}
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:17px;
+}
+.card{
+  background:var(--panel);padding:22px;border-radius:15px;
+  border:1px solid #29382e;
+}
+.card h3{margin-top:0}
+.card p{color:var(--muted)}
+.number{font-size:35px;font-weight:bold;color:var(--green)}
+.match{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:10px;flex-wrap:wrap;
+}
+button{
+  background:var(--green);border:0;padding:12px 19px;
+  border-radius:9px;font-weight:bold;cursor:pointer;
+}
+button:hover{opacity:.85}
+.admin-note{color:var(--muted);font-size:14px}
+footer{
+  text-align:center;padding:30px;background:#101813;
+  color:var(--muted);
+}
+@media(max-width:600px){
+ header{align-items:flex-start;gap:15px;flex-direction:column}
+ nav{gap:13px}
+ section{padding:40px 6%}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">⚽ OTP FC</div>
+  <nav>
+    <a href="#inicio">Início</a>
+    <a href="#plantel">Plantel</a>
+    <a href="#jogos">Jogos</a>
+    <a href="#noticias">Notícias</a>
+    <a href="#trofeus">Troféus</a>
+    <a href="#admin">Admin</a>
+  </nav>
+</header>
+
+<div class="hero" id="inicio">
+  <div class="crest">OTP</div>
+  <div class="tag">SITE OFICIAL DO CLUBE</div>
+  <h1>OTP <span>FC</span></h1>
+  <p>Olival Basto • Telheiras • Póvoa de Santo Adrião</p>
+  <p>Uma equipa. Uma paixão. Uma família.</p>
+</div>
+
+<section id="plantel">
+  <h2>O nosso <span>plantel</span></h2>
+  <div class="grid" id="players">
+    <div class="card"><h3>Afonso</h3><p>Jogador</p></div>
+    <div class="card"><h3>Alexandre</h3><p>Jogador</p></div>
+    <div class="card"><h3>David</h3><p>Jogador</p></div>
+    <div class="card"><h3>Diego</h3><p>Jogador</p></div>
+    <div class="card"><h3>Gui</h3><p>Jogador</p></div>
+    <div class="card"><h3>Santiago</h3><p>Suplente</p></div>
+  </div>
+</section>
+
+<section id="jogos">
+  <h2>Jogos e <span>resultados</span></h2>
+  <div class="card match">
+    <div><h3>OTP FC</h3><p>Próximo jogo</p></div>
+    <div class="number">VS</div>
+    <div><h3>Adversário a confirmar</h3><p>Data por confirmar</p></div>
+  </div>
+</section>
+
+<section id="noticias">
+  <h2>Últimas <span>notícias</span></h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Bem-vindos ao OTP FC!</h3>
+      <p>Este é o site oficial do nosso clube. Aqui vais encontrar novidades, jogos e resultados.</p>
+    </div>
+    <div class="card">
+      <h3>O nosso espírito</h3>
+      <p>Representamos Olival Basto, Telheiras e Póvoa de Santo Adrião!</p>
+    </div>
+  </div>
+</section>
+
+<section id="trofeus">
+  <h2>A nossa <span>história</span></h2>
+  <div class="grid">
+    <div class="card">
+      <div class="number">🏆 1</div>
+      <h3>Primeiro troféu</h3>
+      <p>Conquista do OTP FC</p>
+    </div>
+    <div class="card">
+      <div class="number">🏆 2</div>
+      <h3>Segundo troféu</h3>
+      <p>Mais uma conquista do clube</p>
+    </div>
+  </div>
+</section>
+
+<section id="admin">
+  <h2>Área de <span>administração</span></h2>
+  <div class="card">
+    <h3>Gestão oficial do OTP FC</h3>
+    <p>Esta área será ligada ao sistema seguro de administração.</p>
+    <p class="admin-note">O acesso de administrador e as alterações ao plantel serão configurados com autenticação segura no próximo passo.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">OTP FC</div>
+  <p>Site oficial • Olival Basto, Telheiras e Póvoa de Santo Adrião</p>
+  <p>© 2026 OTP FC</p>
+</footer>
+
+</body>
+</html>
