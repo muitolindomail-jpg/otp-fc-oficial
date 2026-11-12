@@ -95,8 +95,10 @@ footer{text-align:center;padding:25px;background:#111a14;color:#a6b4aa}
 <p>O painel será desbloqueado através da autenticação segura do Supabase.</p>
 <p class="notice">Ainda falta configurar a autenticação e as permissões do administrador.</p>
 <div id="login">
-<label for="email">Email de administrador</label>
-<input id="email" type="email" placeholder="Email da conta Supabase">
+<label for="password">Palavra-passe</label>
+<input id="password" type="password" placeholder="Palavra-passe">
+<button onclick="login()">Entrar como administrador</button>
+<p id="mensagem"></p>
 <label for="password">Palavra-passe</label>
 <input id="password" type="password" placeholder="Palavra-passe">
 <button onclick="login()">Entrar</button>
