@@ -54,7 +54,7 @@ footer{text-align:center;padding:25px;background:#111a14;color:#a6b4aa}
 
 <section id="plantel">
 <h2>O nosso <span>plantel</span></h2>
-<div class="grid" id="plantel-lista">
+<div class="grid">
 <div class="card"><h3>Afonso</h3><p>Jogador</p></div>
 <div class="card"><h3>Alexandre</h3><p>Jogador</p></div>
 <div class="card"><h3>David</h3><p>Jogador</p></div>
@@ -92,21 +92,19 @@ footer{text-align:center;padding:25px;background:#111a14;color:#a6b4aa}
 <h2>Painel de <span>administração</span></h2>
 <div class="card">
 <h3>🔐 Acesso reservado</h3>
-<p>O painel será desbloqueado através da autenticação segura do Supabase.</p>
-<p class="notice">Ainda falta configurar a autenticação e as permissões do administrador.</p>
+<p>Entrada exclusiva do administrador.</p>
+<p class="notice">A autenticação segura ainda está a ser configurada.</p>
+
 <div id="login">
 <label for="password">Palavra-passe</label>
-<input id="password" type="password" placeholder="Palavra-passe">
+<input id="password" type="password" placeholder="Introduz a palavra-passe">
 <button onclick="login()">Entrar como administrador</button>
 <p id="mensagem"></p>
-<label for="password">Palavra-passe</label>
-<input id="password" type="password" placeholder="Palavra-passe">
-<button onclick="login()">Entrar</button>
-<p id="mensagem"></p>
 </div>
+
 <div id="painel" class="hidden">
 <h3>Bem-vindo à administração!</h3>
-<p>Autenticação concluída. A gestão de conteúdos será ligada à base de dados no próximo passo.</p>
+<p>Área de gestão do OTP FC.</p>
 <button onclick="logout()">Terminar sessão</button>
 </div>
 </div>
@@ -121,8 +119,12 @@ footer{text-align:center;padding:25px;background:#111a14;color:#a6b4aa}
 import { createClient } from
 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-const SUPABASE_URL = 'https://ieauihfnqxiwfowdhewn.supabase.co';
-const SUPABASE_KEY = 'password_otpfc;
+const SUPABASE_URL =
+'https://ieauihfnqxiwfowdhewn.supabase.co';
+
+// Coloca aqui a tua chave PUBLICÁVEL do Supabase.
+// Nunca coloques a palavra-passe ou a chave secreta aqui.
+const SUPABASE_KEY = 'COLOCA_A_TUA_CHAVE_PUBLICAVEL';
 
 const supabase = createClient(SUPABASE_URL,SUPABASE_KEY);
 
@@ -130,50 +132,40 @@ window.login = async function(){
  const password = document.getElementById('password').value;
  const msg = document.getElementById('mensagem');
 
- msg.textContent = 'A verificar...';
-
- const { data, error } = await supabase.functions.invoke(
-   'otpfc-admin-login',
-   { body: { password } }
- );
-
- if(error || !data?.success){
-   msg.textContent = 'Palavra-passe incorreta ou erro de ligação.';
+ if(!password){
+   msg.textContent='Introduz a palavra-passe.';
    return;
  }
 
- msg.textContent = 'Acesso autorizado!';
- document.getElementById('login').classList.add('hidden');
- document.getElementById('painel').classList.remove('hidden');
-};
- const msg=document.getElementById('mensagem');
  msg.textContent='A verificar...';
 
- const {data,error}=await supabase.auth.signInWithPassword({
-   email,password
- });
+ try {
+   const {data,error} = await supabase.functions.invoke(
+     'otpfc-admin-login',
+     {body:{password}}
+   );
 
- if(error){
-   msg.textContent='Não foi possível entrar. Verifica o email e a palavra-passe.';
-   return;
+   if(error || !data?.success){
+     msg.textContent='Acesso não autorizado ou serviço ainda não configurado.';
+     return;
+   }
+
+   msg.textContent='Acesso autorizado!';
+   document.getElementById('login').classList.add('hidden');
+   document.getElementById('painel').classList.remove('hidden');
+
+ } catch(error) {
+   msg.textContent='Não foi possível contactar o servidor.';
  }
-
- msg.textContent='Sessão iniciada!';
- document.getElementById('login').classList.add('hidden');
- document.getElementById('painel').classList.remove('hidden');
 };
 
-window.logout=async function(){
- await supabase.auth.signOut();
+window.logout = function(){
  document.getElementById('login').classList.remove('hidden');
  document.getElementById('painel').classList.add('hidden');
+ document.getElementById('password').value='';
+ document.getElementById('mensagem').textContent='';
 };
-
-const {data:{session}}=await supabase.auth.getSession();
-if(session){
- document.getElementById('login').classList.add('hidden');
- document.getElementById('painel').classList.remove('hidden');
-}
 </script>
+
 </body>
 </html>
