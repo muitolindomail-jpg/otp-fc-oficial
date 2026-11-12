@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OTP FC | Oficial</title>
+<title>OTP FC | Site Oficial</title>
 <style>
 :root{--verde:#a6ff45;--fundo:#090e0b;--cartao:#17221a}
 *{box-sizing:border-box}
@@ -26,9 +26,11 @@ h2{font-size:30px}
 .number{font-size:35px;color:var(--verde);font-weight:bold}
 button{background:var(--verde);border:0;padding:12px 18px;border-radius:8px;font-weight:bold;cursor:pointer}
 input{width:100%;padding:13px;margin:8px 0;border-radius:8px;border:1px solid #435448;background:#0c140e;color:white}
-.hidden{display:none}
+.hidden{display:none!important}
 .notice{color:#ffdc81;font-size:14px}
 footer{text-align:center;padding:25px;background:#111a14;color:#a6b4aa}
+#mensagem{color:#ffdc81}
+@media(max-width:600px){h1{font-size:48px}}
 </style>
 </head>
 <body>
@@ -91,21 +93,19 @@ footer{text-align:center;padding:25px;background:#111a14;color:#a6b4aa}
 <section id="admin">
 <h2>Painel de <span>administração</span></h2>
 <div class="card">
-<h3>🔐 Acesso reservado</h3>
-<p>Entrada exclusiva do administrador.</p>
-<p class="notice">A autenticação segura ainda está a ser configurada.</p>
-
 <div id="login">
+<h3>🔐 Entrada do administrador</h3>
 <label for="password">Palavra-passe</label>
 <input id="password" type="password" placeholder="Introduz a palavra-passe">
-<button onclick="login()">Entrar como administrador</button>
+<button id="entrar">Entrar no painel</button>
 <p id="mensagem"></p>
 </div>
 
 <div id="painel" class="hidden">
-<h3>Bem-vindo à administração!</h3>
-<p>Área de gestão do OTP FC.</p>
-<button onclick="logout()">Terminar sessão</button>
+<h3>🏆 Bem-vindo ao painel OTP FC!</h3>
+<p>Estás no painel de demonstração.</p>
+<p class="notice">As alterações ainda não são guardadas no site publicado.</p>
+<button id="sair">Terminar sessão</button>
 </div>
 </div>
 </section>
@@ -113,58 +113,32 @@ footer{text-align:center;padding:25px;background:#111a14;color:#a6b4aa}
 <footer>
 <div class="logo">OTP FC</div>
 <p>Site oficial • 2026</p>
+<p>Olival Basto • Telheiras • Póvoa de Santo Adrião</p>
 </footer>
 
-<script type="module">
-import { createClient } from
-'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+<script>
+const DEMO_PASSWORD = "MUDA_ESTA_PALAVRA";
 
-const SUPABASE_URL =
-'https://ieauihfnqxiwfowdhewn.supabase.co';
+const password = document.getElementById("password");
+const mensagem = document.getElementById("mensagem");
+const login = document.getElementById("login");
+const painel = document.getElementById("painel");
 
-// Coloca aqui a tua chave PUBLICÁVEL do Supabase.
-// Nunca coloques a palavra-passe ou a chave secreta aqui.
-const SUPABASE_KEY = 'COLOCA_A_TUA_CHAVE_PUBLICAVEL';
+document.getElementById("entrar").addEventListener("click", function(){
+  if(password.value === DEMO_PASSWORD){
+    login.classList.add("hidden");
+    painel.classList.remove("hidden");
+    password.value = "";
+  }else{
+    mensagem.textContent = "Palavra-passe incorreta!";
+  }
+});
 
-const supabase = createClient(SUPABASE_URL,SUPABASE_KEY);
-
-window.login = async function(){
- const password = document.getElementById('password').value;
- const msg = document.getElementById('mensagem');
-
- if(!password){
-   msg.textContent='Introduz a palavra-passe.';
-   return;
- }
-
- msg.textContent='A verificar...';
-
- try {
-   const {data,error} = await supabase.functions.invoke(
-     'otpfc-admin-login',
-     {body:{password}}
-   );
-
-   if(error || !data?.success){
-     msg.textContent='Acesso não autorizado ou serviço ainda não configurado.';
-     return;
-   }
-
-   msg.textContent='Acesso autorizado!';
-   document.getElementById('login').classList.add('hidden');
-   document.getElementById('painel').classList.remove('hidden');
-
- } catch(error) {
-   msg.textContent='Não foi possível contactar o servidor.';
- }
-};
-
-window.logout = function(){
- document.getElementById('login').classList.remove('hidden');
- document.getElementById('painel').classList.add('hidden');
- document.getElementById('password').value='';
- document.getElementById('mensagem').textContent='';
-};
+document.getElementById("sair").addEventListener("click", function(){
+  painel.classList.add("hidden");
+  login.classList.remove("hidden");
+  mensagem.textContent = "";
+});
 </script>
 
 </body>
