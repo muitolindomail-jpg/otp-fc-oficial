@@ -127,8 +127,25 @@ const SUPABASE_KEY = 'password_otpfc;
 const supabase = createClient(SUPABASE_URL,SUPABASE_KEY);
 
 window.login = async function(){
- const email=document.getElementById('email').value.trim();
- const password=document.getElementById('password').value;
+ const password = document.getElementById('password').value;
+ const msg = document.getElementById('mensagem');
+
+ msg.textContent = 'A verificar...';
+
+ const { data, error } = await supabase.functions.invoke(
+   'otpfc-admin-login',
+   { body: { password } }
+ );
+
+ if(error || !data?.success){
+   msg.textContent = 'Palavra-passe incorreta ou erro de ligação.';
+   return;
+ }
+
+ msg.textContent = 'Acesso autorizado!';
+ document.getElementById('login').classList.add('hidden');
+ document.getElementById('painel').classList.remove('hidden');
+};
  const msg=document.getElementById('mensagem');
  msg.textContent='A verificar...';
 
